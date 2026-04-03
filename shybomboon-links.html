@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>shybomboon</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23FFB6C1'/><circle cx='11' cy='15' r='3' fill='%23E8889B' opacity='0.5'/><circle cx='21' cy='15' r='3' fill='%23E8889B' opacity='0.5'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--cream:#FFFBF0;--white:#fff;--pink:#FFB6C1;--pink-soft:#FFF0F3;
+--pink-dark:#E8889B;--yellow:#FFF4C2;--yellow-warm:#FFD966;
+--brown:#C4956A;--text:#5A3E36;--text-med:#7A5C52;--text-light:#A8877A;
+--r:20px;--r-lg:28px;
+}
+body{
+  min-height:100vh;font-family:'Poppins',sans-serif;color:var(--text);
+  overflow-x:hidden;background:#FFF5F7;
+}
+
+/* ============================================
+   ANIMATED BLOB BACKGROUND — THE MAIN EVENT
+   Inspired by CodePen "Undulating Background Blobs"
+   ============================================ */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:#FFF5F7}
+
+.blob{
+  position:absolute;
+  border-radius:30% 50% 40% 60%;
+  filter:blur(60px);
+  opacity:0.6;
+  animation:morph 18s ease-in-out infinite alternate;
+  will-change:border-radius,transform;
+}
+
+/* BLOB 1 — huge pink, top left */
+.blob-1{
+  width:55vw;height:55vw;
+  max-width:600px;max-height:600px;
+  background:linear-gradient(135deg,#FFB6C1 0%,#F8A4B8 50%,#E8889B 100%);
+  top:-12%;left:-10%;
+  animation:morph 20s ease-in-out infinite alternate, drift1 25s ease-in-out infinite;
+}
+/* BLOB 2 — large yellow, bottom right */
+.blob-2{
+  width:50vw;height:50vw;
+  max-width:550px;max-height:550px;
+  background:linear-gradient(135deg,#FFF4C2 0%,#FFE9A0 50%,#FFD966 100%);
+  bottom:-15%;right:-8%;
+  animation:morph 22s ease-in-out infinite alternate-reverse, drift2 30s ease-in-out infinite;
+  opacity:0.5;
+}
+/* BLOB 3 — medium pink, center right */
+.blob-3{
+  width:35vw;height:35vw;
+  max-width:400px;max-height:400px;
+  background:linear-gradient(135deg,#FFC8D6 0%,#FFB6C1 50%,#FFA0B4 100%);
+  top:40%;right:5%;
+  animation:morph 16s ease-in-out infinite alternate, drift3 20s ease-in-out infinite;
+  opacity:0.4;
+}
+/* BLOB 4 — small warm accent, left center */
+.blob-4{
+  width:28vw;height:28vw;
+  max-width:320px;max-height:320px;
+  background:linear-gradient(135deg,#FFE4C8 0%,#FFD4A8 50%,#C4956A 100%);
+  top:55%;left:-5%;
+  animation:morph 24s ease-in-out infinite alternate-reverse, drift4 28s ease-in-out infinite;
+  opacity:0.25;
+}
+/* BLOB 5 — tiny pink accent, top right */
+.blob-5{
+  width:20vw;height:20vw;
+  max-width:220px;max-height:220px;
+  background:linear-gradient(135deg,#FFD6E0 0%,#FFB6C1 100%);
+  top:8%;right:15%;
+  animation:morph 14s ease-in-out infinite alternate, drift5 18s ease-in-out infinite;
+  opacity:0.35;
+}
+
+@keyframes morph{
+  0%{border-radius:30% 50% 40% 60%}
+  25%{border-radius:58% 42% 55% 45%}
+  50%{border-radius:45% 55% 30% 70%}
+  75%{border-radius:60% 40% 50% 50%}
+  100%{border-radius:40% 60% 55% 45%}
+}
+@keyframes drift1{
+  0%,100%{transform:translate(0,0) rotate(0deg)}
+  33%{transform:translate(4vw,3vh) rotate(5deg)}
+  66%{transform:translate(-2vw,5vh) rotate(-3deg)}
+}
+@keyframes drift2{
+  0%,100%{transform:translate(0,0) rotate(0deg)}
+  33%{transform:translate(-5vw,-3vh) rotate(-4deg)}
+  66%{transform:translate(3vw,-6vh) rotate(6deg)}
+}
+@keyframes drift3{
+  0%,100%{transform:translate(0,0)}
+  50%{transform:translate(-4vw,5vh) rotate(8deg)}
+}
+@keyframes drift4{
+  0%,100%{transform:translate(0,0)}
+  50%{transform:translate(6vw,-4vh) rotate(-5deg)}
+}
+@keyframes drift5{
+  0%,100%{transform:translate(0,0)}
+  50%{transform:translate(-3vw,3vh) rotate(10deg)}
+}
+
+/* subtle grain on top of everything */
+.grain{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-size:180px;
+}
+
+/* ============ LAYOUT ============ */
+.wrap{max-width:580px;margin:0 auto;padding:52px 20px 44px;position:relative;z-index:2}
+
+/* ============ HEADER ============ */
+.hdr{text-align:center;margin-bottom:38px}
+
+.av{
+  width:120px;height:120px;border-radius:50%;margin:0 auto 20px;
+  border:4px solid rgba(255,255,255,0.8);
+  box-shadow:0 8px 40px rgba(232,136,155,0.25),0 0 80px rgba(255,182,193,0.1);
+  overflow:hidden;background:var(--pink-soft);
+}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.av-ph{
+  width:100%;height:100%;
+  background:linear-gradient(150deg,var(--pink) 0%,var(--pink-dark) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;color:rgba(255,255,255,0.75);
+  font-family:'Quicksand',sans-serif;font-weight:700;
+}
+
+h1{
+  font-family:'Quicksand',sans-serif;font-weight:700;
+  font-size:34px;color:var(--text);letter-spacing:0.2px;line-height:1.15;
+  margin-bottom:8px;
+  text-shadow:0 2px 20px rgba(255,182,193,0.15);
+}
+.bio{font-size:15px;color:var(--text-med);line-height:1.5;max-width:360px;margin:0 auto}
+
+/* ============ BENTO GRID ============ */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+.c{
+  background:rgba(255,255,255,0.6);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.5);
+  border-radius:var(--r);text-decoration:none;color:var(--text);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:28px 16px;gap:10px;position:relative;overflow:hidden;
+  transition:all 0.35s cubic-bezier(.25,.46,.45,.94);cursor:pointer;
+  opacity:0;transform:translateY(16px);animation:up .5s ease-out forwards;
+  box-shadow:0 4px 16px rgba(0,0,0,0.03);
+}
+.c:hover{
+  transform:translateY(-5px) scale(1.02);
+  box-shadow:0 20px 60px rgba(232,136,155,0.15),0 4px 16px rgba(0,0,0,0.04);
+  border-color:rgba(255,255,255,0.8);
+  background:rgba(255,255,255,0.8);
+}
+.c i{font-size:32px;transition:transform 0.3s ease}
+.c:hover i{transform:scale(1.18)}
+.c-n{font-family:'Quicksand',sans-serif;font-weight:600;font-size:15px;text-align:center;line-height:1.25}
+.c-h{font-size:12.5px;color:var(--text-light);text-align:center}
+
+/* -- Twitch hero -- */
+.c-tw{
+  grid-column:1/-1;flex-direction:row;padding:32px 36px;gap:22px;
+  justify-content:flex-start;border-radius:var(--r-lg);
+  background:rgba(243,234,255,0.65);border-color:rgba(145,70,255,0.1);
+}
+.c-tw:hover{border-color:rgba(145,70,255,0.25);background:rgba(243,234,255,0.85);box-shadow:0 20px 60px rgba(145,70,255,0.1)}
+.c-tw i{font-size:44px;color:#9146FF}
+.c-tw .info{display:flex;flex-direction:column;gap:4px}
+.c-tw .c-n{font-size:20px;font-weight:700;text-align:left}
+.c-tw .c-h{font-size:14px;text-align:left}
+.badge{
+  display:inline-flex;align-items:center;gap:5px;width:fit-content;
+  background:rgba(145,70,255,0.1);padding:4px 12px;border-radius:20px;
+  font-size:11px;font-weight:600;color:#7C3AED;font-family:'Quicksand',sans-serif;margin-top:4px;
+}
+.dot{width:6px;height:6px;border-radius:50%;background:#9146FF;animation:pulse 2s ease-in-out infinite}
+
+/* -- TikTok -- */
+.c-tt{grid-column:span 2;padding:30px 20px}
+.c-tt i{color:#010101;font-size:36px}
+
+/* -- Instagram -- */
+.c-ig{grid-column:span 2;padding:30px 20px;background:rgba(253,240,245,0.55);border-color:rgba(225,48,108,0.08)}
+.c-ig i{font-size:36px;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.c-ig:hover{border-color:rgba(225,48,108,0.2);background:rgba(253,240,245,0.8)}
+
+/* -- Discord -- */
+.c-dc{grid-column:span 2;background:rgba(236,238,255,0.55);border-color:rgba(88,101,242,0.08)}
+.c-dc i{color:#5865F2}
+.c-dc:hover{border-color:rgba(88,101,242,0.2);background:rgba(236,238,255,0.8)}
+
+/* -- YouTube -- */
+.c-yt{grid-column:span 2;background:rgba(255,240,240,0.5);border-color:rgba(255,0,0,0.05)}
+.c-yt i{color:#FF0000}
+.c-yt:hover{border-color:rgba(255,0,0,0.12);background:rgba(255,240,240,0.8)}
+
+/* -- Ko-fi -- */
+.c-kf{
+  grid-column:1/-1;flex-direction:row;padding:22px 32px;gap:14px;
+  justify-content:center;border-radius:var(--r-lg);
+  background:rgba(255,244,194,0.6);border-color:rgba(255,217,102,0.3);
+}
+.c-kf:hover{background:rgba(255,244,194,0.85);box-shadow:0 16px 48px rgba(255,217,102,0.12);border-color:var(--yellow-warm)}
+.c-kf i{font-size:24px;color:var(--brown)}
+.c-kf .c-n{font-size:14.5px}
+
+/* ============ FOOTER ============ */
+.ft{
+  text-align:center;margin-top:44px;font-size:11.5px;color:var(--text-med);
+  opacity:0;animation:up .5s ease-out forwards;animation-delay:.65s;
+}
+
+/* ============ ANIMATIONS ============ */
+@keyframes up{to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.75)}}
+
+.c:nth-child(1){animation-delay:60ms}
+.c:nth-child(2){animation-delay:140ms}
+.c:nth-child(3){animation-delay:220ms}
+.c:nth-child(4){animation-delay:300ms}
+.c:nth-child(5){animation-delay:380ms}
+.c:nth-child(6){animation-delay:460ms}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:540px){
+  .wrap{padding:40px 14px 32px}
+  .bento{grid-template-columns:1fr 1fr;gap:10px}
+  .c-tw{padding:24px 18px;gap:14px;border-radius:var(--r)}
+  .c-tw i{font-size:36px}.c-tw .c-n{font-size:17px}
+  .c-tt,.c-ig{grid-column:span 1;padding:24px 14px}
+  .c-tt i,.c-ig i{font-size:28px}
+  .c-dc,.c-yt{grid-column:span 1;padding:22px 14px}
+  .c-kf{padding:18px 20px;border-radius:var(--r)}
+  h1{font-size:28px}.av{width:100px;height:100px}
+  .blob-1{width:80vw;height:80vw}.blob-2{width:70vw;height:70vw}
+  .blob-3{width:50vw;height:50vw}.blob-4{width:45vw;height:45vw}
+}
+</style>
+</head>
+<body>
+
+<!-- ======== ANIMATED BLOB BACKGROUND ======== -->
+<div class="bg">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+  <div class="blob blob-5"></div>
+</div>
+<div class="grain"></div>
+
+<!-- ======== CONTENT ======== -->
+<div class="wrap">
+
+  <header class="hdr">
+    <div class="av">
+      <!-- =============================================
+           PARA AGREGAR LA FOTO:
+           1. Borra la linea <div class="av-ph">SB</div>
+           2. Descomenta la linea de <img> abajo
+           3. Cambia "shybomboon-photo.jpg" por el nombre real del archivo
+           ============================================= -->
+      <div class="av-ph">SB</div>
+      <!-- <img src="shybomboon-photo.jpg" alt="shybomboon"> -->
+    </div>
+    <h1>shybomboon</h1>
+    <p class="bio">tu rincon acogedor de streams y contenido cute</p>
+  </header>
+
+  <div class="bento">
+    <a href="https://twitch.tv/shybomboon" target="_blank" rel="noopener" class="c c-tw">
+      <i class="fa-brands fa-twitch"></i>
+      <div class="info">
+        <div class="c-n">Twitch</div>
+        <div class="c-h">shybomboon</div>
+        <div class="badge"><span class="dot"></span>streaming</div>
+      </div>
+    </a>
+    <a href="https://tiktok.com/@shybombon.com" target="_blank" rel="noopener" class="c c-tt">
+      <i class="fa-brands fa-tiktok"></i>
+      <div class="c-n">TikTok</div>
+      <div class="c-h">@shybombon.com</div>
+    </a>
+    <a href="https://instagram.com/shybomboon" target="_blank" rel="noopener" class="c c-ig">
+      <i class="fa-brands fa-instagram"></i>
+      <div class="c-n">Instagram</div>
+      <div class="c-h">@shybomboon</div>
+    </a>
+    <a href="#" target="_blank" rel="noopener" class="c c-dc">
+      <i class="fa-brands fa-discord"></i>
+      <div class="c-n">Discord</div>
+      <div class="c-h">Bomboncitos</div>
+    </a>
+    <a href="#" target="_blank" rel="noopener" class="c c-yt">
+      <i class="fa-brands fa-youtube"></i>
+      <div class="c-n">YouTube</div>
+      <div class="c-h">shybomboon</div>
+    </a>
+    <a href="#" target="_blank" rel="noopener" class="c c-kf">
+      <i class="fa-solid fa-mug-hot"></i>
+      <div class="c-n">apoyar a shybomboon</div>
+    </a>
+  </div>
+
+  <footer class="ft">shybomboon &middot; 2026</footer>
+
+</div>
+
+</body>
+</html>
